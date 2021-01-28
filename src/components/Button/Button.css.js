@@ -28,6 +28,6 @@ export const RegularButton = styled(RootButton)`
     margin: ${({ theme }) => `${theme.spacing.xs / 2}px`};
     padding: ${({ theme }) =>
         `${theme.spacing.xs / 2}px ${theme.spacing.xs}px`};
-    padding: ${({ theme }) => `2px solid ${theme.colors.pink.normal}`};
+    border: ${({ theme }) => `2px solid ${theme.colors.pink.normal}`};
     border-radius: 3px;
 `;
