@@ -8,7 +8,7 @@ import GlobalStyle from "./index.css";
 
 import theme from "utils/theme";
 
-import { Navigation, LoadingIndicator, Wrapper } from "components";
+import { Navigation, LoadingIndicator, Wrapper, Button } from "components";
 
 function App() {
     const { t, i18n } = useTranslation();
@@ -24,12 +24,12 @@ function App() {
                     ]}
                     RightElement={
                         <div>
-                            <button onClick={() => i18n.changeLanguage("pl")}>
+                            <Button type="regular" onClick={() => i18n.changeLanguage("pl")}>
                                 pl
-                            </button>
-                            <button onClick={() => i18n.changeLanguage("en")}>
+                            </Button>
+                            <Button type="regular" onClick={() => i18n.changeLanguage("en")}>
                                 en
-                            </button>
+                            </Button>
                         </div>
                     }
                 />
