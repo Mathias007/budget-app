@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import React, { Suspense, Fragment } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
@@ -8,12 +8,12 @@ import GlobalStyle from "./index.css";
 
 import theme from "utils/theme";
 
-import { Navigation, Wrapper } from "components";
+import { Navigation, LoadingIndicator, Wrapper } from "components";
 
 function App() {
     const { t, i18n } = useTranslation();
     return (
-        <ThemeProvider theme={theme}>
+        <Fragment>
             <GlobalStyle />
 
             <Router>
@@ -42,15 +42,17 @@ function App() {
                     </Switch>
                 </Wrapper>
             </Router>
-        </ThemeProvider>
+        </Fragment>
     );
 }
 
 function RootApp() {
     return (
-        <Suspense fallback="Loading...">
-            <App />
-        </Suspense>
+        <ThemeProvider theme={theme}>
+            <Suspense fallback={<LoadingIndicator />}>
+                <App />
+            </Suspense>
+        </ThemeProvider>
     );
 }
 
