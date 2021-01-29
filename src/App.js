@@ -6,16 +6,20 @@ import { connect } from "react-redux";
 import { ThemeProvider } from "styled-components";
 
 import GlobalStyle from "./index.css";
-import { fetchBudget } from "data/actions/budget.actions";
+import {
+    fetchBudget,
+    fetchBudgetedCategories,
+} from "data/actions/budget.actions";
 
 import theme from "utils/theme";
 
 import { Navigation, LoadingIndicator, Wrapper, Button } from "components";
 
-function App({ budget, fetchBudget }) {
+function App({ budget, fetchBudget, fetchBudgetedCategories }) {
     useEffect(() => {
         fetchBudget(1);
-    }, [fetchBudget]);
+        fetchBudgetedCategories(1);
+    }, [fetchBudget, fetchBudgetedCategories]);
 
     const { t, i18n } = useTranslation();
     return (
@@ -66,6 +70,7 @@ const ConnectedApp = connect(
     },
     {
         fetchBudget,
+        fetchBudgetedCategories,
     }
 )(App);
 
