@@ -1,5 +1,6 @@
 /* eslint-disable import/no-anonymous-default-export */
 export * from "./budget.constans";
+export * from "./common.constans";
 
 // LOADING STATES
 export const LOADING_STATES = {
