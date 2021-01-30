@@ -3,9 +3,9 @@ import {
     BUDGET_GET_REQUEST,
     BUDGET_GET_SUCCESS,
     BUDGET_GET_FAILURE,
-    BUDGETED_CATEGORIES_REQUEST,
-    BUDGETED_CATEGORIES_SUCCESS,
-    BUDGETED_CATEGORIES_FAILURE,
+    BUDGETED_CATEGORIES_GET_REQUEST,
+    BUDGETED_CATEGORIES_GET_SUCCESS,
+    BUDGETED_CATEGORIES_GET_FAILURE,
 } from "data/constans";
 
 const initialState = {
@@ -45,7 +45,7 @@ function budget(state = initialState, action) {
                 loadingState: newLoadingState,
             };
 
-        case BUDGETED_CATEGORIES_REQUEST:
+        case BUDGETED_CATEGORIES_GET_REQUEST:
             return {
                 ...state,
                 loadingState: {
@@ -54,8 +54,8 @@ function budget(state = initialState, action) {
                 },
             };
 
-        case BUDGETED_CATEGORIES_SUCCESS:
-            delete newLoadingState.BUDGETED_CATEGORIES_REQUEST;
+        case BUDGETED_CATEGORIES_GET_SUCCESS:
+            delete newLoadingState.BUDGETED_CATEGORIES_GET_REQUEST;
 
             return {
                 ...state,
@@ -63,8 +63,8 @@ function budget(state = initialState, action) {
                 loadingState: newLoadingState,
             };
 
-        case BUDGETED_CATEGORIES_FAILURE:
-            delete newLoadingState.BUDGETED_CATEGORIES_REQUEST;
+        case BUDGETED_CATEGORIES_GET_FAILURE:
+            delete newLoadingState.BUDGETED_CATEGORIES_GET_REQUEST;
 
             return {
                 ...state,
