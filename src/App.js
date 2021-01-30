@@ -1,26 +1,15 @@
-import React, { Suspense, Fragment, useEffect } from "react";
+import React, { Suspense, Fragment } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { connect } from "react-redux";
-
 import { ThemeProvider } from "styled-components";
 
 import GlobalStyle from "./index.css";
-import {
-    fetchBudget,
-    fetchBudgetedCategories,
-} from "data/actions/budget.actions";
-
 import theme from "utils/theme";
 
 import { Navigation, LoadingIndicator, Wrapper, Button } from "components";
+import Budget from "pages/Budget";
 
-function App({ budget, fetchBudget, fetchBudgetedCategories }) {
-    useEffect(() => {
-        fetchBudget(1);
-        fetchBudgetedCategories(1);
-    }, [fetchBudget, fetchBudgetedCategories]);
-
+function App() {
     const { t, i18n } = useTranslation();
     return (
         <Fragment>
@@ -51,10 +40,12 @@ function App({ budget, fetchBudget, fetchBudgetedCategories }) {
                 />
                 <Wrapper>
                     <Switch>
-                        <Route exact patch="/">
+                        <Route exact path="/">
                             Homepage
                         </Route>
-                        <Route path="/budget">Budget page</Route>
+                        <Route path="/budget">
+                            <Budget />
+                        </Route>
                     </Switch>
                 </Wrapper>
             </Router>
@@ -62,23 +53,11 @@ function App({ budget, fetchBudget, fetchBudgetedCategories }) {
     );
 }
 
-const ConnectedApp = connect(
-    (state) => {
-        return {
-            budget: state.budget.budget,
-        };
-    },
-    {
-        fetchBudget,
-        fetchBudgetedCategories,
-    }
-)(App);
-
 function RootApp() {
     return (
         <ThemeProvider theme={theme}>
             <Suspense fallback={<LoadingIndicator />}>
-                <ConnectedApp />
+                <App />
             </Suspense>
         </ThemeProvider>
     );
