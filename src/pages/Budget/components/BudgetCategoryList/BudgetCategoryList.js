@@ -2,6 +2,8 @@ import React from "react";
 import { connect } from "react-redux";
 import { groupBy } from "lodash";
 
+import { ToggleableList } from "components";
+
 function BudgetCategoryList({ budgetedCategories, allCategories }) {
     const budgetedCategoriesByParent = groupBy(
         budgetedCategories,
@@ -10,10 +12,13 @@ function BudgetCategoryList({ budgetedCategories, allCategories }) {
                 .parentCategory.name
     );
 
-    console.log(budgetedCategories);
     console.log(budgetedCategoriesByParent);
 
-    return <div>Budget category list</div>;
+    return (
+        <div>
+            <ToggleableList items={[]} />
+        </div>
+    );
 }
 
 export default connect((state) => ({
