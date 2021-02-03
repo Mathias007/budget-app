@@ -5,6 +5,8 @@ import {
     CategoryAmount,
 } from "./BudgetCategoryList.css";
 
+import { formatCurrency } from "utils";
+
 function ParentCategory({ name, onClick, categories, transactions }) {
     const categoryLeftValue = useMemo(() => {
         const budgeted = (() => {
@@ -40,7 +42,7 @@ function ParentCategory({ name, onClick, categories, transactions }) {
         <Root onClick={onClick}>
             <span>{name}</span>
             <CategoryAmount negative={categoryLeftValue < 0}>
-                {categoryLeftValue}
+                {formatCurrency(categoryLeftValue)}
             </CategoryAmount>
         </Root>
     );
