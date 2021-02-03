@@ -29,7 +29,14 @@ function BudgetCategoryList({ budgetedCategories, allCategories, budget }) {
                 const { name } = allCategories.find(
                     (category) => category.id === budgetedCategory.categoryId
                 );
-                return <CategoryItem key={budgetedCategory.id} name={name} />;
+                return (
+                    <CategoryItem
+                        key={budgetedCategory.id}
+                        name={name}
+                        item={budgetedCategory}
+                        transactions={budget.transactions}
+                    />
+                );
             }),
         })
     );
