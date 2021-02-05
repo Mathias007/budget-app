@@ -6,12 +6,34 @@ import { formatCurrency, formatDate } from "utils";
 
 import { List, ListItem } from "./BudgetTransactionList.css";
 
-function BudgetTransactionList({ transactions, allCategories }) {
-    const groupedTransactions = groupBy(transactions, (transaction) =>
-        new Date(transaction.date).getUTCDate()
-    );
+function BudgetTransactionList({
+    transactions,
+    allCategories,
+    selectedParentCategoryId,
+}) {
+    const filteredTransactionsBySelectedParentCategory = (() => {
+        if (typeof selectedParentCategoryId === "undefined") {
+            return transactions;
+        }
 
-    console.log({ groupedTransactions });
+        return transactions.filter((transaction) => {
+            try {
+                const category = allCategories.find(
+                    (category) => category.id === transaction.categoryId
+                );
+                const parentCategoryName = category.parentCategory.name;
+
+                return parentCategoryName === selectedParentCategoryId;
+            } catch {
+                return false;
+            }
+        });
+    })();
+
+    const groupedTransactions = groupBy(
+        filteredTransactionsBySelectedParentCategory,
+        (transaction) => new Date(transaction.date).getUTCDate()
+    );
 
     return (
         <List>
@@ -46,4 +68,5 @@ function BudgetTransactionList({ transactions, allCategories }) {
 export default connect((state) => ({
     transactions: state.budget.budget.transactions,
     allCategories: state.common.allCategories,
+    selectedParentCategoryId: state.budget.selectedParentCategoryId,
 }))(BudgetTransactionList);

@@ -8,16 +8,13 @@ import { ToggleableList } from "components";
 import ParentCategory from "./ParentCategory";
 import CategoryItem from "./CategoryItem";
 
-import {
-    selectParentCategory,
-    selelectParentCategory,
-} from "data/actions/budget.actions";
+import { selectParentCategory } from "data/actions/budget.actions";
 
 function BudgetCategoryList({
     budgetedCategories,
     allCategories,
     budget,
-    selelectParentCategory,
+    selectParentCategory,
 }) {
     const { t } = useTranslation();
     const budgetedCategoriesByParent = groupBy(
@@ -122,6 +119,6 @@ export default connect(
         budget: state.budget.budget,
     }),
     {
-        selelectParentCategory,
+        selectParentCategory,
     }
 )(BudgetCategoryList);
