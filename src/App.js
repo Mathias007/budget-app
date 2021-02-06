@@ -2,12 +2,16 @@ import React, { Suspense, Fragment } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { ThemeProvider } from "styled-components";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import GlobalStyle from "./index.css";
 import theme from "utils/theme";
 
 import { Navigation, LoadingIndicator, Wrapper, Button } from "components";
 import Budget from "pages/Budget";
+
+toast.configure();
 
 function App() {
     const { t, i18n } = useTranslation();
