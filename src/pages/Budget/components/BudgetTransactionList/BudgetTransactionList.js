@@ -8,12 +8,24 @@ import { List, ListItem } from "./BudgetTransactionList.css";
 
 function BudgetTransactionList({
     transactions,
+    budgetedCategories,
     allCategories,
     selectedParentCategoryId,
 }) {
     const filteredTransactionsBySelectedParentCategory = (() => {
         if (typeof selectedParentCategoryId === "undefined") {
             return transactions;
+        }
+
+        if (selectedParentCategoryId === null) {
+            return transactions.filter((transaction) => {
+                const hasBudgetCategory = budgetedCategories.some(
+                    (budgetedCategory) =>
+                        budgetedCategory.categoryId === transaction.categoryId
+                );
+
+                return !hasBudgetCategory;
+            });
         }
 
         return transactions.filter((transaction) => {
@@ -67,6 +79,7 @@ function BudgetTransactionList({
 
 export default connect((state) => ({
     transactions: state.budget.budget.transactions,
+    budgetedCategories: state.budget.budgetedCategories,
     allCategories: state.common.allCategories,
     selectedParentCategoryId: state.budget.selectedParentCategoryId,
 }))(BudgetTransactionList);
