@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { connect } from "react-redux";
 import { groupBy } from "lodash";
 import { useTranslation } from "react-i18next";
@@ -17,6 +17,7 @@ function BudgetCategoryList({
     selectParentCategory,
 }) {
     const { t } = useTranslation();
+    const handleClickParentCategoryRef = useRef(null);
     const budgetedCategoriesByParent = groupBy(
         budgetedCategories,
         (item) =>
@@ -26,10 +27,12 @@ function BudgetCategoryList({
 
     const handleClearParentCategorySelect = () => {
         selectParentCategory();
+        handleClickParentCategoryRef.current();
     };
 
     const handleSelectRestParentCategories = () => {
         selectParentCategory(null);
+        handleClickParentCategoryRef.current();
     };
 
     const listItems = Object.entries(budgetedCategoriesByParent).map(
@@ -108,7 +111,10 @@ function BudgetCategoryList({
                     onClick={handleClearParentCategorySelect}
                 />
             </div>
-            <ToggleableList items={listItems} />
+            <ToggleableList
+                items={listItems}
+                clickRef={handleClickParentCategoryRef}
+            />
             <div
                 css={`
                     border-top: 5px solid
