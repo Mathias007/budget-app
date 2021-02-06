@@ -59,10 +59,10 @@ function BudgetTransactionList({
     return (
         <List>
             {Object.entries(groupedTransactions).map(([key, transactions]) => (
-                <li>
+                <li key={key}>
                     <ul>
                         {transactions.map((transaction) => (
-                            <ListItem>
+                            <ListItem key={transaction.id}>
                                 <div>{transaction.description}</div>
                                 <div>{formatCurrency(transaction.amount)}</div>
                                 <div>{formatDate(transaction.date)}</div>
