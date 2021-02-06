@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useMemo } from "react";
 import { connect } from "react-redux";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, useHistory } from "react-router-dom";
 
 import {
     fetchBudget,
@@ -26,6 +26,8 @@ function Budget({
     fetchAllCategories,
     addTransaction,
 }) {
+    const history = useHistory();
+
     useEffect(() => {
         fetchBudget(1);
         fetchBudgetedCategories(1);
@@ -33,8 +35,9 @@ function Budget({
     }, [fetchBudget, fetchBudgetedCategories, fetchAllCategories]);
 
     const handleSubmitAddTransaction = (values) => {
-        addTransaction({ budgetId: budget.id, data: values });
-        console.log(budget.id);
+        addTransaction({ budgetId: budget.id, data: values }).then(() => {
+            history.goBack();
+        });
     };
 
     const isLoaded = useMemo(
