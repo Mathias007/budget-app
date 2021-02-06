@@ -13,6 +13,7 @@ import { LoadingIndicator, Modal, Button } from "components";
 
 import BudgetCategoryList from "pages/Budget/components/BudgetCategoryList";
 import BudgetTransactionList from "pages/Budget/components/BudgetTransactionList";
+import AddTransactionForm from "pages/Budget/components/AddTransactionForm";
 
 function Budget({
     commonState,
@@ -57,7 +58,9 @@ function Budget({
             </Grid>
             <Switch>
                 <Route path="/budget/transactions/new">
-                    <Modal>Modal Content</Modal>
+                    <Modal>
+                        <AddTransactionForm />
+                    </Modal>
                 </Route>
             </Switch>
         </Fragment>
