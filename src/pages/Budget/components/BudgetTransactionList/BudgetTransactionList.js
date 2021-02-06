@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { connect } from "react-redux";
 import { groupBy } from "lodash";
 
@@ -12,7 +12,7 @@ function BudgetTransactionList({
     allCategories,
     selectedParentCategoryId,
 }) {
-    const filteredTransactionsBySelectedParentCategory = (() => {
+    const filteredTransactionsBySelectedParentCategory = useMemo(() => {
         if (typeof selectedParentCategoryId === "undefined") {
             return transactions;
         }
@@ -40,11 +40,20 @@ function BudgetTransactionList({
                 return false;
             }
         });
-    })();
+    }, [
+        allCategories,
+        budgetedCategories,
+        selectedParentCategoryId,
+        transactions,
+    ]);
 
-    const groupedTransactions = groupBy(
-        filteredTransactionsBySelectedParentCategory,
-        (transaction) => new Date(transaction.date).getUTCDate()
+    const groupedTransactions = useMemo(
+        () =>
+            groupBy(
+                filteredTransactionsBySelectedParentCategory,
+                (transaction) => new Date(transaction.date).getUTCDate()
+            ),
+        [filteredTransactionsBySelectedParentCategory]
     );
 
     return (
