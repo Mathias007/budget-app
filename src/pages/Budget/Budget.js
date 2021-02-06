@@ -18,6 +18,7 @@ import AddTransactionForm from "pages/Budget/components/AddTransactionForm";
 function Budget({
     commonState,
     budgetState,
+    allCategories,
     fetchBudget,
     fetchBudgetedCategories,
     fetchAllCategories,
@@ -59,7 +60,10 @@ function Budget({
             <Switch>
                 <Route path="/budget/transactions/new">
                     <Modal>
-                        <AddTransactionForm />
+                        <AddTransactionForm
+                            categories={allCategories}
+                            groupCategoriesBy="parentCategory.name"
+                        />
                     </Modal>
                 </Route>
             </Switch>
@@ -73,6 +77,7 @@ export default connect(
             budget: state.budget.budget,
             commonState: state.common.loadingState,
             budgetState: state.budget.loadingState,
+            allCategories: state.common.allCategories,
         };
     },
     {

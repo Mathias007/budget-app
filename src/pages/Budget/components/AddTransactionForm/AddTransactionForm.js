@@ -1,9 +1,34 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { Form, Field } from "react-final-form";
+import { groupBy } from "lodash";
 
 const required = (value) => (value ? undefined : "This field is required!");
 
-function AddTransactionForm({}) {
+function AddTransactionForm({ categories, groupCategoriesBy }) {
+    const groupedCategoriesByParentName = groupCategoriesBy
+        ? groupBy(categories, groupCategoriesBy)
+        : null;
+
+    const categoryItems = useMemo(
+        () =>
+            groupedCategoriesByParentName
+                ? Object.entries(groupedCategoriesByParentName).map(
+                      ([parentName, categories]) => (
+                          <optgroup label={parentName}>
+                              {categories.map((category) => (
+                                  <option value={category.id}>
+                                      {category.name}
+                                  </option>
+                              ))}
+                          </optgroup>
+                      )
+                  )
+                : categories.map((category) => (
+                      <option value={category.id}>{category.name}</option>
+                  )),
+        [groupedCategoriesByParentName, categories]
+    );
+
     return (
         <Form
             onSubmit={console.log}
@@ -49,12 +74,7 @@ function AddTransactionForm({}) {
                         {({ input, meta }) => (
                             <div>
                                 <label>Category</label>
-                                {/* select */}
-                                <input
-                                    {...input}
-                                    type="text"
-                                    placeholder="Category"
-                                />
+                                <select {...input}>{categoryItems}</select>
                                 {meta.error && meta.touched && (
                                     <span>{meta.error}</span>
                                 )}
